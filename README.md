@@ -29,3 +29,23 @@ An expense rules engine built in TypeScript (Bun runtime).
   bun install
   bun run index.ts
   ```
+
+### Build 2 — Delivery Cost Tracker (`src/delivery-tracker`)
+
+A delivery cost tracker built in TypeScript (Bun runtime).
+
+- **Concepts practiced:** Encapsulated domain state with `Map`-backed lookups, time-based
+  cost calculation, and incremental settlement of outstanding balances.
+- **Key design:**
+  - `DeliveryCostTracker` owns `drivers` and `deliveries` maps plus a running `totalCost`.
+  - `add_driver` / `add_delivery` register entities; delivery cost is derived from duration
+    (`RATE_PER_MINUTE`), and each delivery tracks an `"unpaid" | "paid"` status.
+  - `pay_up_to_time(timestamp)` settles every delivery that ended on or before a cutoff,
+    while `get_total_cost` / `get_cost_to_be_paid` report lifetime and outstanding amounts.
+- **Context:** Interview prep — modeling stateful domain logic.
+- **Run it:**
+  ```bash
+  cd src/delivery-tracker
+  bun install
+  bun run src/delivery-tracker.ts
+  ```
